@@ -31,4 +31,14 @@
         android:name="com.example.android_2_dz_2.ui.form.FromFragment"
         android:label="fragment_from"
         tools:layout="@layout/fragment_from" />
+    <fragment
+        android:id="@+id/navigation_galery"
+        android:name="com.example.android_2_dz_2.Fragment_image"
+        android:label="fragment_image"
+        tools:layout="@layout/fragment_image" />
+    <fragment
+        android:id="@+id/onBoardFragment"
+        android:name="com.example.android_2_dz_2.ui.onBord.OnBoardFragment"
+        android:label="fragment_bord_"
+        tools:layout="@layout/fragment_bord_" />
 </navigation>
