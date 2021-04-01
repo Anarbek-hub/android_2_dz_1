@@ -33,6 +33,7 @@ public class FromFragment extends Fragment {
 
         return binding.getRoot();
     }
+
     public void onClick(){
         binding.btn.setOnClickListener(v -> {
             Bundle bundle = new Bundle();

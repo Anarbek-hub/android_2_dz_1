@@ -17,7 +17,7 @@ import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder>  {
     private ItemLayoutBinding binding;
-    private List<HomeModel> list = new ArrayList();
+    private ArrayList<HomeModel> list = new ArrayList();
 
 
     @NonNull
@@ -58,14 +58,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
 
         public void onBind(HomeModel homeModel) {
 
+            binding.date.setText(homeModel.getDate());
+
             binding.nameItem.setText(homeModel.getName());
             binding.numberItem.setText(homeModel.getNumber());
 
-//            binding.getRoot().setOnClickListener(v -> {
-//                Toast.makeText(binding.getRoot().getContext(),"post "
-//                        + getAdapterPosition(), Toast.LENGTH_LONG).show();
-//
-//            });
+            binding.getRoot().setOnClickListener(v -> {
+               Toast.makeText(binding.getRoot().getContext(),"post "
+                        + getAdapterPosition(), Toast.LENGTH_LONG).show();
+
+            });
 
             binding.getRoot().setOnLongClickListener(v -> {
                 AlertDialog.Builder adg = new AlertDialog.Builder(binding.getRoot().getContext());

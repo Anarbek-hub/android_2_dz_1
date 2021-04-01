@@ -28,14 +28,13 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private NavController navController;
-    private HomeAdapter homeAdapter;
+    private HomeAdapter homeAdapter=new HomeAdapter();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         navController = NavHostFragment.findNavController(this);
         binding = FragmentHomeBinding.inflate(inflater , container ,false);
-        homeAdapter = new HomeAdapter();
         onClick();
 //        Green();
         binding.rv.setAdapter(homeAdapter);
@@ -53,7 +52,7 @@ public class HomeFragment extends Fragment {
                         String a = result.getString("name");
                         String b = result.getString("number");
                         Log.e("TAG", "onFragmentResult: " + a );
-                        homeAdapter.addList(new HomeModel(a , b));
+                        homeAdapter.addList(new HomeModel(a,b));
 
                     }
                 });
