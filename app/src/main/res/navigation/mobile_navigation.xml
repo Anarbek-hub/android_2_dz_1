@@ -41,4 +41,10 @@
         android:name="com.example.android_2_dz_2.ui.onBord.OnBoardFragment"
         android:label="fragment_bord_"
         tools:layout="@layout/fragment_bord_" />
+
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.example.android_2_dz_2.ui.auth.AuthFragment"
+        android:label="@string/title_auth"
+        tools:layout="@layout/fragment_auth" />
 </navigation>

@@ -19,22 +19,26 @@ import com.example.android_2_dz_2.R;
 import com.example.android_2_dz_2.databinding.FragmentBordBinding;
 import com.example.android_2_dz_2.databinding.FragmentFromBinding;
 import com.example.android_2_dz_2.databinding.FragmentHomeBinding;
+import com.example.android_2_dz_2.utils.App;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 
 public class OnBoardFragment extends Fragment {
 
     private OnBoardAdapter adapter;
+    private NavController navController;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_bord_, container, false);
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        navController = Navigation.findNavController(getActivity(),R.id.nav_host_fragment);
         super.onViewCreated(view, savedInstanceState);
-
+        App.prefsHelper.saveBoardShown(true);
         ViewPager2 viewPager2 = view.findViewById(R.id.viewPager);
         SpringDotsIndicator indicator = view.findViewById(R.id.springDotsIndicator);
         adapter = new OnBoardAdapter();
@@ -52,6 +56,8 @@ public class OnBoardFragment extends Fragment {
                 viewPager2.setCurrentItem(viewPager2.getCurrentItem()+1);
             }
         });
+        App.prefsHelper.saveBoardShown(true);
+
 
     }
 }

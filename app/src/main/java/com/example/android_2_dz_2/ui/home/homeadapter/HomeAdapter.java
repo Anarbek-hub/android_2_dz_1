@@ -17,7 +17,8 @@ import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder>  {
     private ItemLayoutBinding binding;
-    private ArrayList<HomeModel> list = new ArrayList();
+    private List<HomeModel> list = new ArrayList();
+    private  Listen listen;
 
 
     @NonNull
@@ -35,6 +36,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         } else {
             binding.holderItem.setBackgroundColor(Color.BLUE);
         }
+
+
     }
 
     @Override
@@ -42,10 +45,31 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         return list.size();
     }
 
-    public void addList(HomeModel homeModel){
-        list.add(homeModel);
+//    public void addElement(HomeModel homeModel){
+//        list.add(homeModel);
+//        notifyDataSetChanged();
+//    }
+    public void addList(List<HomeModel> homeModelList){
+        list = homeModelList;
         notifyDataSetChanged();
     }
+    public HomeAdapter(Listen listen){
+        this.listen = listen;
+    }
+
+    public HomeModel getModelToId(int id){
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId() == id){
+                return list.get(i);
+            }
+        }
+        return null;
+    }
+
+
+
+
+
 
     class HomeViewHolder extends RecyclerView.ViewHolder {
 
@@ -57,11 +81,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         }
 
         public void onBind(HomeModel homeModel) {
-
-            binding.date.setText(homeModel.getDate());
-
             binding.nameItem.setText(homeModel.getName());
             binding.numberItem.setText(homeModel.getNumber());
+
+
 
             binding.getRoot().setOnClickListener(v -> {
                Toast.makeText(binding.getRoot().getContext(),"post "

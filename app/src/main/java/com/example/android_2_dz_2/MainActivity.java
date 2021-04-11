@@ -3,7 +3,9 @@ package com.example.android_2_dz_2;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.android_2_dz_2.utils.App;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications,R.id.navigation_galery)
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.navigation_galery)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -44,20 +46,28 @@ public class MainActivity extends AppCompatActivity {
                 list.add(R.id.navigation_dashboard);
                 list.add(R.id.navigation_notifications);
                 list.add(R.id.navigation_galery);
-                if (list.contains(destination.getId())){
+                if (list.contains(destination.getId())) {
                     navView.setVisibility(View.VISIBLE);
-                }
-                else{
+                } else {
                     getSupportActionBar().hide();
                     navView.setVisibility(View.GONE);
                 }
             }
         });
-        navController.navigate(R.id.onBoardFragment);
-    }
+        if (!App.prefsHelper.isBoardShow()){
+            navController.navigate(R.id.onBoardFragment);
+        }
 
+    }
+//    if(FirebaseAuth. == null){
+//        navController.navigate(R.id.authFragment);
+//    }
     @Override
-    public boolean onSupportNavigateUp() {
-        return NavigationUI.navigateUp(navController , appBarConfiguration ) || super.onSupportNavigateUp();
+    public void onBackPressed(){
+        super.onBackPressed();
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        return NavigationUI.navigateUp(navController,appBarConfiguration) || super.onSupportNavigateUp();
     }
 }
