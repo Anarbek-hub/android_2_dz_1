@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android_2_dz_2.databinding.ItemLayoutBinding;
+import com.example.android_2_dz_2.utils.App;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,11 +67,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         return null;
     }
 
-
-
-
-
-
     class HomeViewHolder extends RecyclerView.ViewHolder {
 
 
@@ -100,9 +96,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 adg.setPositiveButton(positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        list.remove(getAdapterPosition());
-                        notifyDataSetChanged();
+                        App.database.noteDao().dalete(homeModel);
+                        notifyItemChanged(getAdapterPosition());
                     }
+
+
+
+
                 });
                 adg.setNegativeButton(negative, null);
                 adg.show();

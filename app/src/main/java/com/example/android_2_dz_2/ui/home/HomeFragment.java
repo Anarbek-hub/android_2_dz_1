@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +21,8 @@ import com.example.android_2_dz_2.ui.home.homeadapter.HomeAdapter;
 import com.example.android_2_dz_2.ui.home.homeadapter.HomeModel;
 import com.example.android_2_dz_2.ui.home.homeadapter.Listen;
 import com.example.android_2_dz_2.utils.App;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,17 +34,18 @@ public class HomeFragment extends Fragment implements Listen {
     private HomeAdapter homeAdapter;
     private List<HomeModel> list = new ArrayList<>();
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        homeAdapter = new HomeAdapter( this);
+        homeAdapter = new HomeAdapter(this);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         navController = NavHostFragment.findNavController(this);
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+
         App.database.noteDao().getAll().observe(getViewLifecycleOwner(), new Observer<List<HomeModel>>() {
             @Override
             public void onChanged(List<HomeModel> homeModelList) {
@@ -50,12 +54,11 @@ public class HomeFragment extends Fragment implements Listen {
         });
         binding.rv.setAdapter(homeAdapter);
         getDataInForm();
+        clickSort();
         click();
 
         return binding.getRoot();
-
     }
-
 
     private void getDataInForm() {
         getParentFragmentManager().setFragmentResultListener("key",
@@ -72,30 +75,46 @@ public class HomeFragment extends Fragment implements Listen {
                             homeModel.setNumber(number);
                             App.database.noteDao().updata(homeModel);
                         } else {
+                            HomeModel newModel = new HomeModel(number, name);
                             App.database.noteDao().insert(new HomeModel(name, number));
+                            FirebaseFirestore.getInstance().collection("notes")
+                                    .add(newModel)
+                                    .addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(requireContext(), "Failure", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(requireContext(), "Failure" + task.getException(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
                         }
                     }
-
-
                 });
-        }
-//    public void Green(){
+    }
+
+    //    public void Green(){
 //        homeAdapter.addElement(new HomeModel("Anarbek", "509988686", id))
-
-
     @Override
     public void setDataForForm(HomeModel homeModel, int position) {
         Bundle bundle = new Bundle();
-
-        bundle.putString("name2",homeModel.getName());
-        bundle.putString("number2",homeModel.getNumber());
-        bundle.putInt("id",homeModel.getId());
-        getParentFragmentManager().setFragmentResult("2",bundle);
+        bundle.putString("name2", homeModel.getName());
+        bundle.putString("number2", homeModel.getNumber());
+        bundle.putInt("id", homeModel.getId());
+        getParentFragmentManager().setFragmentResult("2", bundle);
         navController.navigate(R.id.action_navigation_home_to_fromFragment);
     }
-    public void click(){
+
+    public void click() {
         binding.fap.setOnClickListener(v -> {
             navController.navigate(R.id.action_navigation_home_to_fromFragment);
+        });
+    }
+
+    public void clickSort() {
+        binding.btn1.setOnClickListener(v -> {
+            homeAdapter.addList(App.database.noteDao().getAsc());
+            binding.rv.setAdapter(homeAdapter);
         });
     }
 }

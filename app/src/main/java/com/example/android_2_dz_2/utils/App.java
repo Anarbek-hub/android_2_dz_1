@@ -19,7 +19,9 @@ public class App extends Application {
         prefsHelper = new PrefsHelper(this);
         database = Room.databaseBuilder(getApplicationContext(),
                 NoteDatabase.class,
-                "database").allowMainThreadQueries()
+                "database")
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
                 .build();
     }
 }

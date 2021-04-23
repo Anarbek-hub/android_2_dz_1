@@ -59,9 +59,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-//    if(FirebaseAuth. == null){
-//        navController.navigate(R.id.authFragment);
-//    }
+
     @Override
     public void onBackPressed(){
         super.onBackPressed();
