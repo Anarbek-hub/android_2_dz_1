@@ -26,6 +26,8 @@ public class OnBoardFragment extends Fragment {
 
     private OnBoardAdapter adapter;
     private NavController navController;
+    private Button btn;
+    private Button button, start;
 
 
     @Nullable
@@ -37,24 +39,52 @@ public class OnBoardFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        navController = Navigation.findNavController(getActivity(),R.id.nav_host_fragment);
+        btn = view.findViewById(R.id.btnStart);
+        start = view.findViewById(R.id.btnStart);
+        button = view.findViewById(R.id.btnNext);
+        btn.setOnClickListener(v -> {
+
+        });
+
+        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         super.onViewCreated(view, savedInstanceState);
         App.prefsHelper.saveBoardShown(true);
         ViewPager2 viewPager2 = view.findViewById(R.id.viewPager);
         SpringDotsIndicator indicator = view.findViewById(R.id.springDotsIndicator);
         adapter = new OnBoardAdapter();
         viewPager2.setAdapter(adapter);
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if (position == 2) {
+                    button.setVisibility(View.GONE);
+                    button.setOnClickListener(v -> {
+                        navController.navigateUp();
+                    });
+                }
+                if (position == 2) {
+                    start.setVisibility(View.VISIBLE);
+                    start.setOnClickListener(v -> {
+                        navController.navigate(R.id.authFragment);
+                    });
+
+                } else {
+                    start.setVisibility(View.GONE);
+                }
+            }
+        });
         indicator.setViewPager2(viewPager2);
         adapter.setOnStartClickListener(new OnBoardAdapter.OnStartClickListener() {
             @Override
             public void onClick() {
-                NavController navController= Navigation.findNavController(getActivity(),R.id.nav_host_fragment);
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                 navController.navigateUp();
             }
 
             @Override
             public void onClicker() {
-                viewPager2.setCurrentItem(viewPager2.getCurrentItem()+1);
+                viewPager2.setCurrentItem(viewPager2.getCurrentItem() + 1);
             }
         });
         App.prefsHelper.saveBoardShown(true);

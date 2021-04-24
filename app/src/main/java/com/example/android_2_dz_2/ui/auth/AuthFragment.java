@@ -33,7 +33,7 @@ public class AuthFragment extends Fragment {
     private FragmentAuthBinding binding;
     private NavController navController;
     private String vertId;
-    private final String code = binding.etCod.getText().toString().trim();
+    private String code ;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,9 +51,7 @@ public class AuthFragment extends Fragment {
     }
 
     private void onClickListener() {
-        binding.btnSms.setOnClickListener(v -> {
-            singInCode();
-        });
+
         binding.btnSing.setOnClickListener(v -> {
             binding.codCon.setVisibility(View.VISIBLE);
             binding.phoneCons.setVisibility(View.GONE);
@@ -61,15 +59,13 @@ public class AuthFragment extends Fragment {
         });
     }
 
-    private void singInCode() {
-        if (TextUtils.isEmpty(code)) {
-            binding.etCod.setError("введите код");
-            return;
-        }
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(vertId, code);
+    private void check(String phoneAuthProvider, String s) {
+
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(phoneAuthProvider, s );
         signInWithPhoneAuthCredential(credential);
     }
-//    mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
+    //    mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 //
 //        @Override
 //        public void onVerificationCompleted(PhoneAuthCredential credential) {
@@ -118,6 +114,7 @@ public class AuthFragment extends Fragment {
                 public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
                     Toast.makeText(requireContext(), "Авторизация успешна", Toast.LENGTH_SHORT)
                             .show();
+                    signInWithPhoneAuthCredential(phoneAuthCredential);
                 }
 
                 @Override
@@ -130,18 +127,23 @@ public class AuthFragment extends Fragment {
                         PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                     super.onCodeSent(s, forceResendingToken);
                     vertId = s;
+                    binding.btnSms.setOnClickListener(v -> {
+                        code = binding.etCod.getText().toString().trim();
+                        check(s , binding.etCod.getText().toString());
+                    });
                 }
             };
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         FirebaseAuth.getInstance().signInWithCredential(credential)
-                .addOnCompleteListener((Executor) this, task -> {
+                .addOnCompleteListener(requireActivity(), task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d("TAG", "signInWithCredential:success");
                         Toast.makeText(requireContext(), "success register", Toast.LENGTH_SHORT).show();
                         FirebaseUser user = task.getResult().getUser();
                         navController.navigate(R.id.action_authFragment_to_navigation_home);
+
                         // Update UI
                     } else {
                         // Sign in failed, display a message and update the UI

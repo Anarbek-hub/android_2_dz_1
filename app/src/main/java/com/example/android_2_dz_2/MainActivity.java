@@ -54,9 +54,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        if (!App.prefsHelper.isBoardShow()){
-            navController.navigate(R.id.onBoardFragment);
+//        if (!App.prefsHelper.isBoardShow()){
+//            navController.navigate(R.id.onBoardFragment);
+//        }
+        if (FirebaseAuth.getInstance().getCurrentUser() == null){
+            navController.navigate(R.id.authFragment);
         }
+        navController.navigate(R.id.onBoardFragment);
 
     }
 

@@ -13,10 +13,10 @@
         <action
             android:id="@+id/action_navigation_home_to_fromFragment"
             app:destination="@id/fromFragment" />
-
         <action
-            android:id="@+id/action_navigation_home_to_authFragment2"
+            android:id="@+id/action_navigation_home_to_authFragment"
             app:destination="@id/authFragment" />
+
     </fragment>
 
     <fragment
@@ -44,11 +44,7 @@
         android:id="@+id/onBoardFragment"
         android:name="com.example.android_2_dz_2.ui.onBord.OnBoardFragment"
         android:label="fragment_bord_"
-        tools:layout="@layout/fragment_bord_" >
-        <action
-            android:id="@+id/action_onBoardFragment_to_authFragment"
-            app:destination="@id/authFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_bord_" />
 
     <fragment
         android:id="@+id/authFragment"
