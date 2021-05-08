@@ -16,13 +16,30 @@ public class HomeModel implements Serializable {
 
     private String name;
     private String number;
+    private String date;
+    private String editDate = "НЕ был изменен";
 
-    public HomeModel( String name, String number) {
-        this.name = name;
-        this.number = number;
+    public String getDate() {
+        return date;
     }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
 
+    public String getEditDate() {
+        return editDate;
+    }
+
+    public void setEditDate(String editDate) {
+        this.editDate = editDate;
+    }
+
+    public HomeModel(String name, String number, String date) {
+        this.name = name;
+        this.number = number;
+        this.date = date;
+    }
 
     public int getId() {
         return id;
@@ -37,7 +54,6 @@ public class HomeModel implements Serializable {
 //    public String getDate() {
 //        return date;
 //    }
-
 
 
     public String getName() {

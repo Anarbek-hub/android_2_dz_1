@@ -24,7 +24,10 @@ import com.example.android_2_dz_2.utils.App;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements Listen {
@@ -33,6 +36,7 @@ public class HomeFragment extends Fragment implements Listen {
     private NavController navController;
     private HomeAdapter homeAdapter;
     private List<HomeModel> list = new ArrayList<>();
+    private String s;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +65,8 @@ public class HomeFragment extends Fragment implements Listen {
     }
 
     private void getDataInForm() {
+        DateFormat dateFormat = new SimpleDateFormat("dd MMM  HH : mm");
+        s = dateFormat.format(new Date());
         getParentFragmentManager().setFragmentResultListener("key",
                 getViewLifecycleOwner(), new FragmentResultListener() {
                     @Override
@@ -73,10 +79,11 @@ public class HomeFragment extends Fragment implements Listen {
                         if (homeModel != null) {
                             homeModel.setName(name);
                             homeModel.setNumber(number);
+                            homeModel.setEditDate(s);
                             App.database.noteDao().updata(homeModel);
                         } else {
-                            HomeModel newModel = new HomeModel(number, name);
-                            App.database.noteDao().insert(new HomeModel(name, number));
+                            HomeModel newModel = new HomeModel(number, name , s);
+                            App.database.noteDao().insert(new HomeModel(name, number, s));
                             FirebaseFirestore.getInstance().collection("notes")
                                     .add(newModel)
                                     .addOnCompleteListener(task -> {

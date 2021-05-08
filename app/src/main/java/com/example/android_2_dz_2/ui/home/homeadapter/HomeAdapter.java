@@ -31,7 +31,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
-        holder.onBind(list.get(position));
+        holder.onBind(list.get(position), listen);
         if (position % 2 == 0) {
             binding.holderItem.setBackgroundColor(Color.GREEN);
         } else {
@@ -76,16 +76,19 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
 
         }
 
-        public void onBind(HomeModel homeModel) {
+        public void onBind(HomeModel homeModel, Listen listen) {
+            binding.march1.setText(homeModel.getDate());
+            binding.march2.setText(homeModel.getEditDate());
             binding.nameItem.setText(homeModel.getName());
             binding.numberItem.setText(homeModel.getNumber());
+
 
 
 
             binding.getRoot().setOnClickListener(v -> {
                Toast.makeText(binding.getRoot().getContext(),"post "
                         + getAdapterPosition(), Toast.LENGTH_LONG).show();
-
+               listen.setDataForForm(homeModel,getAdapterPosition());
             });
 
             binding.getRoot().setOnLongClickListener(v -> {

@@ -1,34 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="130dp"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/holderItem"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="25 марта"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:id="@+id/date"
-        android:textColor="#A54D4D"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="10dp"/>
+    android:layout_margin="10dp">
     <TextView
         android:id="@+id/nameTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="Заголовок : "
-        android:textSize="20sp"
+        android:textColor="#A54D4D"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date" />
-
-
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/nameItem"
         android:layout_width="0dp"
@@ -36,36 +23,66 @@
         android:layout_margin="10dp"
         android:layout_marginStart="68dp"
         android:layout_marginTop="16dp"
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/nameTxt"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imageView1"
         app:layout_constraintStart_toEndOf="@id/nameTxt"
-        app:layout_constraintTop_toTopOf="@id/nameTxt"
-        tools:text="Анарбек" />
-
+        app:layout_constraintTop_toTopOf="@id/nameTxt" />
     <TextView
         android:id="@+id/numberTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Описание: "
-        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/nameTxt"
         app:layout_constraintTop_toBottomOf="@id/nameTxt" />
-
     <TextView
         android:id="@+id/numberItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:singleLine="true"
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/numberTxt"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imageView2"
         app:layout_constraintStart_toEndOf="@id/numberTxt"
+        app:layout_constraintTop_toTopOf="@id/numberTxt" />
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_image_24"
+        app:layout_constraintEnd_toStartOf="@id/march1"
+        app:layout_constraintTop_toTopOf="@id/nameItem" />
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/march2"
+        android:src="@drawable/ic_baseline_image_24"
+        app:layout_constraintTop_toTopOf="@id/numberItem" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="25 марта"
+        android:textStyle="bold"
+        android:id="@+id/march1"
+        app:layout_constraintTop_toTopOf="@id/nameTxt"
+        app:layout_constraintBottom_toBottomOf="@id/nameTxt"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="25 марта"
+        android:textStyle="bold"
+        android:textColor="#A54D4D"
+        android:id="@+id/march2"
         app:layout_constraintTop_toTopOf="@id/numberTxt"
-        tools:text="509988686"/>
-
+        app:layout_constraintBottom_toBottomOf="@id/numberTxt"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
-

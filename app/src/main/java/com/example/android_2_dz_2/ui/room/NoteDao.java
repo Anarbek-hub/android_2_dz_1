@@ -13,6 +13,9 @@ import java.util.List;
 
 @Dao
 public interface NoteDao {
+
+
+
     //дастать , сортировка
     @Query("SELECT * FROM homemodel")
     LiveData<List<HomeModel>> getAll();
@@ -20,6 +23,8 @@ public interface NoteDao {
 
     @Query("SELECT * FROM HomeModel ORDER by name ASC")
     List<HomeModel> getAsc();
+
+
     //добавить
     @Insert
     void insert(HomeModel homemodel);
@@ -32,6 +37,7 @@ public interface NoteDao {
 
     @Delete
     void dalete(HomeModel homeModel);
+
 
 
 }

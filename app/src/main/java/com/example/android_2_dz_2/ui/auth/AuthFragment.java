@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,6 +57,7 @@ public class AuthFragment extends Fragment {
             binding.codCon.setVisibility(View.VISIBLE);
             binding.phoneCons.setVisibility(View.GONE);
             sendVertCode();
+
         });
     }
 
@@ -157,6 +159,7 @@ public class AuthFragment extends Fragment {
 
 
     private void sendVertCode() {
+        clock();
         String phone = binding.etPhone.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
             binding.etPhone.setError("введите номер");
@@ -171,6 +174,17 @@ public class AuthFragment extends Fragment {
                         .setCallbacks(mCallback)          // OnVerificationStateChangedCallbacks
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
+    }
+    private void clock(){
+        new CountDownTimer(60000,1000){
+            public void onTick(long millisUntilFinished){
+                binding.tv1.setText("осталось: " + millisUntilFinished/1000);
+            }
+            public void onFinish(){
+                binding.tv1.setText("ГОТОВА!!!");
+            }
+        }.start();
+
     }
 
 }
